@@ -31,7 +31,7 @@ class App extends Component {
             skipEmptyLines: true,
 
             complete: (results) => {
-                    this.state.allData = this.removeInvalidCountriesName(results.data)
+                this.state.allData = this.removeInvalidCountriesName(results.data)
             }
         })
     }
@@ -56,16 +56,16 @@ class App extends Component {
     }
 
     getGraph(){
-            if(this.state.currentGraph === "Ages") {
-                const AgeRange = ["0-19","20-39","40-59","60-79","80+"];
-                return(this.getBarChartGraph(AgeRange));
-            }
-            else if (this.state.currentGraph === "Countries"){
-                return(this.getBarChartGraph(this.state.allValidCountries));
-            }
-            else {
-                return(<BarChart width={1200} height={350}/>);
-            }
+        if(this.state.currentGraph === "Ages") {
+            const AgeRange = ["0-19","20-39","40-59","60-79","80+"];
+            return(this.getBarChartGraph(AgeRange));
+        }
+        else if (this.state.currentGraph === "Countries"){
+            return(this.getBarChartGraph(this.state.allValidCountries));
+        }
+        else {
+            return(<BarChart width={1200} height={350}/>);
+        }
     }
 
     getBarChartGraph(dataOfKeys){
@@ -108,11 +108,11 @@ class App extends Component {
             return acc;
         }, {});
 
-        return (this.createObjSortedAgeToGroups(arrayOfagesByCountry));
+        return (this.createObjSortedAgeToGroups(arrayOfagesByCountry,false));
     }
 
 
-    createObjSortedAgeToGroups(objToSortByGroupAge){
+    createObjSortedAgeToGroups(objToSortByGroupAge,filterKey){
 
         let groupsAgeObj = {};
         Lodash.forEach(objToSortByGroupAge, (value,key)=> {
@@ -130,6 +130,10 @@ class App extends Component {
 
         let data = [];
         Lodash.forEach(groupsAgeObj,(value,key)=>{
+            if(filterKey){
+                key = `${key}%`;
+            }
+
             data.push({name: key, "0-19": value["0-19"], "20-39": value["20-39"], "40-59": value["40-59"] ,"60-79": value["60-79"], "80+":value["80+"]});
         });
 
@@ -169,7 +173,7 @@ class App extends Component {
             return (this.createObjOfPercentagesByCountingCountries(filterByGhostFollowersPercentage));
         }
         else {
-            return (this.createObjSortedAgeToGroups(filterByGhostFollowersPercentage));
+            return (this.createObjSortedAgeToGroups(filterByGhostFollowersPercentage,true));
         }
     }
 
@@ -244,19 +248,19 @@ class App extends Component {
         })
     }
 
-  render() {
-    return (
-      <div className="App">
-          <body className="App-body">
-          <h2 className="App-title">Select Your Graph</h2>
-          {this.getGraph()}
-          <button className="App-button" onClick={this.buttonGraphAgesByCountries_click}>Ages By Countries</button>
-          <button className="App-button" onClick={this.buttonGraphCountriesByGhostFollowersPercentage_click}>Countries By Ghost Followers Percentage</button>
-          <button className="App-button" onClick={this.buttonGraphAgesByGhostFollowersPercentage_click}>Ages By Ghost Followers Percentage</button>
-          </body>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App">
+                <body className="App-body">
+                <h2 className="App-title">Select Your Graph</h2>
+                {this.getGraph()}
+                <button className="App-button" onClick={this.buttonGraphAgesByCountries_click}>Ages By Countries</button>
+                <button className="App-button" onClick={this.buttonGraphCountriesByGhostFollowersPercentage_click}>Countries By Ghost Followers Percentage</button>
+                <button className="App-button" onClick={this.buttonGraphAgesByGhostFollowersPercentage_click}>Ages By Ghost Followers Percentage</button>
+                </body>
+            </div>
+        );
+    }
 }
 
 export default App;
