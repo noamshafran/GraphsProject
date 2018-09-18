@@ -1,0 +1,40 @@
+.App {
+  text-align: center;
+  background: black;
+}
+
+.App-title {
+  font-weight: bold;
+  font-size: 3em;
+  color: white;
+}
+
+.recharts-legend-item-text{
+  color:white;
+}
+.App-body{
+  height: 100%;
+  width: 100%;
+  background: black;
+  position: absolute;
+  bottom: 0;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+
+
+.App-button{
+  background: #98FB98;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 40px;
+  margin-left: 20px;
+  padding: 20px 20px;
+  border-radius: 10px;
+  border: white;
+}
+
+
